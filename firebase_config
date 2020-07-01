@@ -1,0 +1,10 @@
+var firebaseConfig = {
+    apiKey: "firebaseapikey",
+    authDomain: "garage-web.firebaseapp.com",
+    databaseURL: "https://garage-web.firebaseio.com",
+    projectId: "garage-web",
+    storageBucket: "garage-web.appspot.com",
+    messagingSenderId: "senderid",
+    appId: "appid",
+    measurementId: "measurementid"
+  };

@@ -1,0 +1,428 @@
+<!-- <form method="POST">
+	{% csrf_token%}
+{{form}}
+ssas
+
+<input type="submit" name="submit">
+</form>
+
+ -->
+{% load staticfiles %}
+{% include 'base/header.html' %}
+
+<link rel="stylesheet" href="{% static 'css/daterangepicker.min.css' %}">
+<script src="{% static 'js/daterangepicker.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<style type="text/css">
+
+.add-membrs{
+    position: relative;
+}
+.add-membrs h5{
+text-decoration: underline;
+}
+.add-membrs ul{
+list-style: none;
+padding-left: 0px;
+}
+.add-membrs ul li{
+    padding-bottom: 5px;
+    width: 49%;
+    display: inline-block;
+}
+.add-membrs .container_check{
+   /* display:block;*/
+    position:relative;
+    float: right;
+    padding-top:5px;
+    font-size:13px;
+    padding-left:35px;
+    margin-bottom:12px;
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    margin-right:10px
+}
+.add-membrs .container_check input{
+    position:absolute;
+    opacity:0;
+   der:1px solid transparent*/
+    border: 1px solid #2c3e50;
+}
+.add-membrs .container_check input:checked ~ .checkmark{
+    background-color: #2c3e50;
+    border:1px solid transparent;
+}
+.add-membrs .container_check .checkmark:after{
+    conten cursor:pointer;
+}
+.add-membrs .container_check .checkmark{
+    position:absolute;
+    top: 6px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border:1px solid #2c3e50;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    border-radius:3px;
+    -webkit-transition:all 0.2s ease;
+    transition:all 0.2s ease;
+}
+.add-membrs .container_check .checkmark:after {
+    content: "";
+    position: absolute;
+    display: block;
+    left: 4px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Date Picker
+========================*/
+
+  .datepicker.dropdown-menu {
+     width: 237px;
+    padding: 1.07143em 1.78571em;
+    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    right: 0 !important;
+    }
+  .datepicker tbody {
+    color: #666; }
+  .datepicker table tr td span.active,
+  .datepicker table tr td span.active:hover,
+  .datepicker td .month.active {
+    background: #1976d2 !important; }
+  .datepicker td.active,
+  .datepicker td.selected {
+    background: #1976d2 !important; }
+    .default input[type=text] {
+    border: 1px solid #cad6e2;
+      border-radius: 5px;
+    }
+    .default .input-group {
+      width: 100%;
+      display: block !important;
+      height: 30px;
+    }
+    .default label {
+      /*padding: 5px 9px 0px 0px;*/
+    }
+    .dafault21 {
+    /* width: 28%; */
+    /* width: 42%; */
+    width: 33%;
+    height: 20px;
+    margin-right: 13px;
+    display: inline-block;
+}
+.default{
+    position: relative;
+    padding-bottom: 53px;
+}
+.filter{
+    position: relative;
+    float: right;
+    font-size: 18px;
+    font-weight: 400;
+/*    border: 1px solid #ddd;
+    padding: 0px 27px;*/
+}
+.fil-cont{
+    position: relative;
+}
+.fil-cont h5{
+    padding: 0px;
+    margin: 8px 0 5px;
+}
+.fil-cont ul{
+padding-left: 0px;
+list-style: none;
+margin-top: 0;
+}
+.fil-cont ul li{
+display: inline-block;
+width: 30%;
+}
+.fil-list-grp{
+    position: relative;
+    padding: 3px 15px 0px !important;
+}
+.fil-list-grp:hover{
+background-color: transparent !important;
+
+}
+
+</style>
+
+<div class="profilePage"></div>
+<div class="layout-content">
+    <div class="layout-content-body">
+        <div class="title-bar">
+
+            <h1 class="title-bar-title">
+              <span class="d-ib">Add New Subscription Plan /</span>
+              <a href="/subscription_plan_management/list/">Back to list</a>
+            </h1>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                <div class="col-sm-12 col-md-12">
+                    <div class="demo-form-wrapper">
+                        <form class="form form-horizontal" action="/subscription_plan_management/add/" method="POST" enctype='multipart/form-data'>{% csrf_token%}
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <label class=" control-label">Plan Name</label>
+                              <input id="pname" class="form-control" name="pname"  type="text" value="{{context.pname}}" required>
+                             </div>
+                             <div class="col-md-6">
+                                <label class=" control-label">Plan Name(Arabic)</label>
+                                <label style="color:blue;" onclick="edit_1()">Edit</label>
+                                <input id="pname_ar" class="form-control" name="pname_ar"  type="text" onfocusout="focus_out_1()" value="{{context.pname_ar}}" readonly>
+                             </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                             <div class="col-md-6"  id="wrapper" name='wrapper'>
+                              <label class=" control-label">Plan Description</label>
+                              <!-- <button type="button" class="btn-small btn-primary border-0  mt-2 mb-2  pull-right btn-pink" id="clonePlus" onclick="add_field()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                <br>Key features <input name='p' type="text" class="form-control"> -->
+                              <textarea id="sdesc1" name="pdesc" rows="3" cols="5" class="form-control" placeholder="Type your content here" required>{{context.pdesc}}</textarea>
+                             </div>
+                             <div class="col-md-6"  id="wrapper" name='wrapper'>
+                                <label class=" control-label">Plan Description(Arabic)</label>
+                                <label style="color:blue;" onclick="edit_2()">Edit</label>
+                                <textarea id="sdesc1_ar" name="pdesc_ar" rows="3" cols="5" class="form-control" onfocusout="focus_out_2()" placeholder="Type your content here" readonly>{{context.pdesc_ar}}</textarea>
+                               </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <label class=" control-label">Price (in AED)</label>
+                              <input id="" class="form-control" name="price"  type="text" value="{{context.price}}" required>
+                             </div>
+                             <div class="col-md-6">
+                              <label class="btn btn-warning" onclick="updatearabic()">Check Arabic</label>
+                            </div>
+                            </div>
+
+                            <!-- <div class="dafault21"> -->
+                            <!-- <div class="form-group">
+                              <div class="col-md-6">
+                                <div class="input-group">
+                                  <input  autocomplete="off" type="text" class="form-control datepicker" value="" id="startdate" style="padding: 0 10px 0 25px; border-radius: 0;" name='startdate' value="{{context.startdate}}" placeholder="From">
+                                  <span class="icon icon-calendar input-icon" style="width: 25px;"></span>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text ml-2">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> -->
+                            <!-- <div class="dafault21 tb-to"> -->
+                            <!-- <div class="form-group">
+                              <div class="col-md-6">
+                                  <div class="input-group">
+                                      <input type="text" autocomplete="off" class="form-control datepicker" value="" id="enddate" style="padding: 0 10px 0 25px; border-radius: 0;" name='enddate' value="{{context.enddate}}" placeholder="To">
+                                      <span class="icon icon-calendar input-icon" style="width: 25px;"></span>
+                                      <div class="input-group-append">
+                                          <div class="input-group-text ml-2">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div> -->
+
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <label class=" control-label">Valid For (In months)</label>
+                              <input id="valid_for" class="form-control" name="valid_for"  type="number" min="0" value="{{context.valid_for}}" placeholder="In Months" required>
+                             </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class=" col-sm-8  col-md-8 ">
+                                    <button class="btn btn-primary " type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        {% if msg %}
+                          <p style="color:green;text-align: center;">{{msg}}<p>
+                        {% endif %}
+                        <!-- {% if form.errors %}
+          	               <br>
+           	               <p style="color:red;text-align: center;">{{ form.non_field_errors.as_text |cut:"* "}}<p>
+                        {% endif %} -->
+                        {% if form.errors %}
+                                  {% for field in form %}
+                                      {% for error in field.errors %}
+                                          <p style="color:red;text-align: center; margin:0px">
+                                              <span>{{ error|escape }}</span>
+                                          </p>
+                                      {% endfor %}
+                                  {% endfor %}
+
+                                  {% for error in form.non_field_errors %}
+                                     <p style="color:red;text-align: center; margin:0px">
+                                          <span>{{ error|escape }}</span>
+                                      </p>
+                                  {% endfor %}
+
+                        {% endif %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p style="color:green;text-align: center;">{{message}}</p>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include 'base/footer.html' %}
+<script type="text/javascript">
+  $(document).ready(function(){
+            $("#startdate").datepicker({
+                todayBtn:  1,
+                autoclose: true,
+            }).on('changeDate', function (selected) {
+                var minDate = new Date(selected.date.valueOf());
+                $('#enddate').datepicker('setStartDate', minDate);
+            });
+
+            $("#enddate").datepicker({
+                todayBtn:  1,
+                autoclose: true,
+            }).on('changeDate', function (selected) {
+                 var maxDate = new Date(selected.date.valueOf());
+                 $('#startdate').datepicker('setEndDate', maxDate);
+            });
+        });
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+  $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+
+//ADD ELEMENT DYNAMICALLY IN HTML
+              // function add_field(){
+              //   console.log('hello')
+              //   var dummy = document.createElement("input")
+              //   dummy.setAttribute('name','p')
+              //   dummy.setAttribute('class','form-control')
+              //   document.getElementById("wrapper").appendChild(dummy)
+              //
+              // }
+</script>
+<script>
+  function updatearabic(){
+    var cat1 = document.getElementById("pname").value
+    var cat2 = document.getElementById("sdesc1").value
+    
+    var arr = [cat1,cat2]
+    
+    $.ajax({
+      url: '/user/check_arabic/',
+      type: 'POST',
+      headers: { "X-CSRFToken":getCookie("csrftoken") },
+      data: {'arr': arr},
+      success: function(data){
+          console.log(data)
+          document.getElementById('pname_ar').value = data['data'][0]
+          document.getElementById('sdesc1_ar').value = data['data'][1]
+      },
+      statusCode: {
+          404: function(response) {
+              console.log('ajax.statusCode: 404');
+              alert('404')
+          },
+          500: function(response) {
+              alert('500')
+          },
+          400: function(response) {
+              alert('400')
+          },
+      }
+    });
+  }
+  function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+<script>
+  function edit_1(){
+    $("#pname_ar").prop('readonly', false);
+  }
+  function focus_out_1(){
+    $("#pname_ar").prop('readonly', true);
+  }
+  function edit_2(){
+    $("#sdesc1_ar").prop('readonly', false);
+  }
+  function focus_out_2(){
+    $("#sdesc1_ar").prop('readonly', true);
+  }
+</script>

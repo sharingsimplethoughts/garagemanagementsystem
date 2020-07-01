@@ -1,0 +1,238 @@
+<!-- <form method="POST">
+	{% csrf_token%}
+{{form}}
+ssas
+
+<input type="submit" name="submit">
+</form>
+
+ -->
+{% load staticfiles %}
+{% include 'base/header.html' %}
+
+<div class="profilePage"></div>
+<div class="layout-content">
+    <div class="layout-content-body">
+        <div class="title-bar">
+
+            <h1 class="title-bar-title">
+              <span class="d-ib">Edit Subcategory /</span>
+              <a href="/category_management/category_list/">Back to list</a>
+            </h1>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                <div class="col-sm-12 col-md-12">
+                    <div class="demo-form-wrapper">
+
+                        <form class="form form-horizontal" action="/category_management/edit_sub_category/{{scat.id}}" method="POST" enctype='multipart/form-data'>{% csrf_token%}
+
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <input id="catid" class="form-control" name="catid"  type="hidden" value="{{scat.id}}" required>
+                              <label class=" control-label">Sub-Category Type</label>
+                              <input id="catname" class="form-control" name="catname"  type="text" value="{{scat.subtype}}" required>
+                             </div>
+                              <div class="form-group">
+                                <div class="col-md-6">
+                                  <label class="btn btn-warning" onclick="updatearabic()">Check Arabic</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                 <label class=" control-label">Sub-Category Type(Arabic)</label>
+                                 <input id="catname_ar" class="form-control" name="catname_ar"  onfocusout="focus_out_catname_ar()" type="text" readonly>
+                                </div>
+                                <label style="color:blue;" onclick="edit_catname()">Edit</label>
+                               </div>
+                            <div class="form-group">
+                             <div class="col-md-6 add-pic">
+                              <label class=" control-label">Choose Sub-Category Icon</label>
+                              <div class="pic-box">
+                                <div class="logoImg">
+                                  {% if scat.icon %}
+                                      <img src="{{scat.icon.url}}" id="result1">
+                                  {% else %}
+                                      <img src="/media/img/upload_icon.png" id="result1">
+                                  {% endif %}
+                                 <input id="logo-file" name='caticon' type="file" class="hide">
+                                 <label for="logo-file" class="btn btn-large"></label>
+                                </div>
+                              </div>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <label class=" control-label">Choose Category</label>
+                              <!-- <input id="" class="form-control" name="catname"  type="text" required> -->
+                              <select name="sty" class="form-control">
+                                {% for s in st %}
+                                  {% if s == scat.type %}
+                                    <option selected>{{s.type}}</option>
+                                  {% else %}
+                                    <option>{{s.type}}</option>
+                                  {% endif %}
+                                {% endfor %}
+                              </select>
+                             </div>
+                            </div>
+                            <!-- <label for="" style="color: green;">OR</label>
+                            <div class="form-group">
+                              <div class="col-md-6">
+                                <label class=" control-label">Choose Category(Arabic)</label>
+                                <select name="sty_ar" class="form-control">
+                                  {% for s in st %}
+                                    <option>{{s.type_ar}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            </div> -->
+                            <div class="form-group">
+                                <div class=" col-sm-8  col-md-8 ">
+                                    <button class="btn btn-primary " type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <ul style="color:green;margin:0px">
+                          <li>Image file must be of type jpg or jpeg or png</li>
+                          <li>Image size can not exceed 1mb</li>
+                        </ul>
+                        {% if x == 1 %}
+                        <p style="color:red;text-align: center; margin:0px">
+                          <span>Image file is not valid</span>
+                        </p>
+                        {% endif %}
+                        {% if x == 2 %}
+                        <p style="color:blue;text-align: center; margin:0px">
+                          <span>Subcategory edited successfully.</span>
+                        </p>
+                        {% endif %}
+                        {% if form.errors %}
+                                  {% for field in form %}
+                                      {% for error in field.errors %}
+                                          <p style="color:red;text-align: center; margin:0px">
+                                              <span>{{ error|escape }}</span>
+                                          </p>
+                                      {% endfor %}
+                                  {% endfor %}
+
+                                  {% for error in form.non_field_errors %}
+                                     <p style="color:red;text-align: center; margin:0px">
+                                          <span>{{ error|escape }}</span>
+                                      </p>
+                                  {% endfor %}
+
+                        {% endif %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p style="color:green;text-align: center;">{{message}}</p>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include 'base/footer.html' %}
+
+<script type="text/javascript">
+              $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+
+
+              $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+</script>
+<script>
+  function updatearabic(){
+    var cat = document.getElementById("catname").value
+    console.log(cat)
+    var arr = [cat]
+    console.log(arr)
+    $.ajax({
+      url: '/user/check_arabic/',
+      type: 'POST',
+      headers: { "X-CSRFToken":getCookie("csrftoken") },
+      data: {'arr': arr},
+      success: function(data){
+          console.log(data)
+          document.getElementById('catname_ar').value = data['data'][0]
+      },
+      statusCode: {
+          404: function(response) {
+              console.log('ajax.statusCode: 404');
+              alert('404')
+          },
+          500: function(response) {
+              alert('500')
+          },
+          400: function(response) {
+              alert('400')
+          },
+      }
+    });
+  }
+  function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+<script>
+  function edit_catname(){
+    $("#catname_ar").prop('readonly', false);
+  }
+  function focus_out_catname_ar(){
+    $("#catname_ar").prop('readonly', true);
+  }
+</script>

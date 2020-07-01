@@ -1,0 +1,637 @@
+{% load staticfiles %}
+{% include 'base/header.html' %}
+
+
+<link rel="stylesheet" href="{% static 'css/daterangepicker.min.css' %}">
+
+<script src="{% static 'js/daterangepicker.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<style type="text/css">
+
+.add-membrs{
+    position: relative;
+}
+.add-membrs h5{
+text-decoration: underline;
+}
+.add-membrs ul{
+list-style: none;
+padding-left: 0px;
+}
+.add-membrs ul li{
+    padding-bottom: 5px;
+    width: 49%;
+    display: inline-block;
+}
+.add-membrs .container_check{
+   /* display:block;*/
+    position:relative;
+    float: right;
+    padding-top:5px;
+    font-size:13px;
+    padding-left:35px;
+    margin-bottom:12px;
+    cursor:pointer;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    margin-right:10px
+}
+.add-membrs .container_check input{
+    position:absolute;
+    opacity:0;
+   der:1px solid transparent*/
+    border: 1px solid #2c3e50;
+}
+.add-membrs .container_check input:checked ~ .checkmark{
+    background-color: #2c3e50;
+    border:1px solid transparent;
+}
+.add-membrs .container_check .checkmark:after{
+    conten cursor:pointer;
+}
+.add-membrs .container_check .checkmark{
+    position:absolute;
+    top: 6px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    border:1px solid #2c3e50;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    -ms-border-radius:3px;
+    border-radius:3px;
+    -webkit-transition:all 0.2s ease;
+    transition:all 0.2s ease;
+}
+.add-membrs .container_check .checkmark:after {
+    content: "";
+    position: absolute;
+    display: block;
+    left: 4px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Date Picker
+========================*/
+
+  .datepicker.dropdown-menu {
+     width: 237px;
+    padding: 1.07143em 1.78571em;
+    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    right: 0 !important;
+    }
+  .datepicker tbody {
+    color: #666; }
+  .datepicker table tr td span.active,
+  .datepicker table tr td span.active:hover,
+  .datepicker td .month.active {
+    background: #1976d2 !important; }
+  .datepicker td.active,
+  .datepicker td.selected {
+    background: #1976d2 !important; }
+    .default input[type=text] {
+    border: 1px solid #cad6e2;
+      border-radius: 5px;
+    }
+    .default .input-group {
+      width: 100%;
+      display: block !important;
+      height: 30px;
+    }
+    .default label {
+      /*padding: 5px 9px 0px 0px;*/
+    }
+    .dafault21 {
+    /* width: 28%; */
+    /* width: 42%; */
+    width: 33%;
+    height: 20px;
+    margin-right: 13px;
+    display: inline-block;
+}
+.default{
+    position: relative;
+    padding-bottom: 53px;
+}
+.filter{
+    position: relative;
+    float: right;
+    font-size: 18px;
+    font-weight: 400;
+/*    border: 1px solid #ddd;
+    padding: 0px 27px;*/
+}
+.fil-cont{
+    position: relative;
+}
+.fil-cont h5{
+    padding: 0px;
+    margin: 8px 0 5px;
+}
+.fil-cont ul{
+padding-left: 0px;
+list-style: none;
+margin-top: 0;
+}
+.fil-cont ul li{
+display: inline-block;
+width: 30%;
+}
+.fil-list-grp{
+    position: relative;
+    padding: 3px 15px 0px !important;
+}
+.fil-list-grp:hover{
+background-color: transparent !important;
+
+}
+
+</style>
+
+    <div class="">
+        <div class="layout-content">
+            <div class="layout-content-body">
+                <div class="title-bar">
+                    <h1 class="title-bar-title">
+                      <span class="d-ib">Report Management</span>
+                    </h1>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-body">
+                              <div class="row" style="position: relative;">
+                                <div class="col-md-8 col-sm-8 col-xs-12"  style="position: absolute; top:-0.5%;  z-index: 999;">
+                                  <!-- <form id= filter_date action="/user_management/user_list/{{role}}/dt/"
+                                                 style="width: 50%; float: left;">
+                                    <div class="dafault21">
+                                      <div class="form-group">
+                                        <div class="input-group">
+                                          <input  autocomplete="off" type="text" class="form-control datepicker" value="" id="startdate" style="padding: 0 10px 0 25px; border-radius: 0;" name='startdate' placeholder="From">
+                                          <span class="icon icon-calendar input-icon" style="width: 25px;"></span>
+                                          <div class="input-group-append">
+                                            <div class="input-group-text ml-2">
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="dafault21 tb-to">
+                                      <div class="form-group">
+                                          <div class="input-group">
+                                              <input type="text" autocomplete="off" class="form-control datepicker" value="" id="enddate" style="padding: 0 10px 0 25px; border-radius: 0;" name='enddate' placeholder="To">
+                                              <span class="icon icon-calendar input-icon" style="width: 25px;"></span>
+                                              <div class="input-group-append">
+                                                  <div class="input-group-text ml-2">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+
+                                    <button  style= "width:40px;height: 34px ;margin-top:0px" class="btn btn-default btn-sm btn-labeled" id ="filter-user" type="submit" data-toggle="modal" disabled="disabled">
+                                      <span class="add-btn">
+                                      <i class="fa fa-search"></i>
+                                      </span>
+                                    </button>
+                                  </form> -->
+
+
+                      </div>
+
+                              <div class="table-responsive col-md-12 col-sm-12 col-xs-12">
+                                <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                                    <thead>
+                                       <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Report</th>
+                                            <th>Value</th>
+                                            <!-- <th>Report Type</th> -->
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id = 'userlist'>
+                                            <!-- <tr>
+                                              <td>0</td>
+                                              <td>Total App Downloads</td>
+                                              <td></td>
+                                              <td>
+                                                <form class="" action="/report_management/download_csv/f1" method="get">
+                                                  <select class="form-control form-control-inverse" name="selectionf1" id="selectionf1">
+                                                    <option selected="selected">Datewise</option>
+                                                    <option >Weekly</option>
+                                                    <option>Monthly</option>
+                                                  </select>
+                                                  <button class="btn btn-primary btn-sm btn-labeled" type="button" data-toggle="modal" id="f1" data-target="#viewOption" onClick="viewoption(this.id)" >
+                                                      <span class="btn-label">
+                                                       <span class="icon icon-eye icon-lg icon-fw"></span>
+                                                      </span>
+                                                      View
+                                                  </button>
+                                                   <button class="btn btn-success btn-sm btn-labeled" type="submit" id="f1">
+                                                      <span class="btn-label">
+                                                       <span class="icon icon-check icon-lg icon-fw"></span>
+                                                      </span>
+                                                      Export To CSV
+                                                  </button>
+                                                </form>
+                                              </td>
+                                            </tr> -->
+                                        <tr>
+                                          <td>2</td>
+                                          <td>Total Users</td>
+                                          <td>{{tuser}}</td>
+                                          <!-- <td>
+                                            <select class="" name="selectionf2" id="selectionf2">
+                                              <option>Datewise</option>
+                                              <option>Weekly</option>
+                                              <option>Monthly</option>
+                                            </select>
+                                          </td> -->
+                                          <td>
+                                            <form class="" action="/report_management/download_csv/f2" method="get">
+                                              <select class="form-control form-control-inverse" name="selectionf2" id="selectionf2">
+                                                <option>Datewise</option>
+                                                <option>Weekly</option>
+                                                <option>Monthly</option>
+                                              </select>
+                                              <button class="btn btn-primary btn-sm btn-labeled" type="button" data-toggle="modal" id="f2" data-target="#viewOption" onClick="viewoption(this.id)">
+                                                  <span class="btn-label">
+                                                   <span class="icon icon-eye icon-lg icon-fw"></span>
+                                                  </span>
+                                                  View
+                                              </button>
+                                                <button class="btn btn-success btn-sm btn-labeled" type="submit" id="f2">
+                                                    <span class="btn-label">
+                                                     <span class="icon icon-check icon-lg icon-fw"></span>
+                                                    </span>
+                                                    Export To CSV
+                                                </button>
+                                              </form>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>1</td>
+                                          <td>Total Service Providers</td>
+                                          <td>{{tsp}}</td>
+                                          <!-- <td>
+                                            <select class="" name="selectionf3" id="selectionf3">
+                                              <option>Datewise</option>
+                                              <option>Weekly</option>
+                                              <option>Monthly</option>
+                                            </select>
+                                          </td> -->
+                                          <td>
+                                            <form class="" action="/report_management/download_csv/f3" method="get">
+                                              <select class="form-control form-control-inverse" name="selectionf3" id="selectionf3">
+                                                <option>Datewise</option>
+                                                <option>Weekly</option>
+                                                <option>Monthly</option>
+                                              </select>
+                                              <button class="btn btn-primary btn-sm btn-labeled" type="button" data-toggle="modal" id="f3" data-target="#viewOption" onClick="viewoption(this.id)">
+                                                  <span class="btn-label">
+                                                   <span class="icon icon-eye icon-lg icon-fw"></span>
+                                                  </span>
+                                                  View
+                                              </button>
+                                                <button class="btn btn-success btn-sm btn-labeled" type="submit" id="f3">
+                                                    <span class="btn-label">
+                                                     <span class="icon icon-check icon-lg icon-fw"></span>
+                                                    </span>
+                                                    Export To CSV
+                                                </button>
+                                              </form>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>3</td>
+                                          <td>Total Revenue Generated</td>
+                                          <td>{{trev}} AED</td>
+                                          <!-- <td>
+                                            <select name="selectionf4" id="selectionf4">
+                                              <option>Datewise</option>
+                                              <option>Weekly</option>
+                                              <option>Monthly</option>
+                                            </select>
+                                          </td> -->
+                                          <td>
+                                            <form class="" action="/report_management/download_csv/f4" method="get">
+                                              <select class="form-control form-control-inverse" name="selectionf4" id="selectionf4">
+                                                <option>Datewise</option>
+                                                <option>Weekly</option>
+                                                <option>Monthly</option>
+                                              </select>
+                                              <button class="btn btn-primary btn-sm btn-labeled" type="button" data-toggle="modal" id="f4" data-target="#viewOption" onClick="viewoption(this.id)">
+                                                  <span class="btn-label">
+                                                   <span class="icon icon-eye icon-lg icon-fw"></span>
+                                                  </span>
+                                                  View
+                                              </button>
+                                                <button class="btn btn-success btn-sm btn-labeled" type="submit" id="f4">
+                                                    <span class="btn-label">
+                                                     <span class="icon icon-check icon-lg icon-fw"></span>
+                                                    </span>
+                                                    Export To CSV
+                                                </button>
+                                              </form>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% include 'base/footer.html' %}
+
+<div id="viewOption" tabindex="-1" role="dialog" class="modal fade">
+  <div class="layout-content">
+      <div class="layout-content-body">
+          <div class="title-bar">
+
+
+          </div>
+          <div class="row gutter-xs">
+              <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                  <div class="col-sm-12 col-md-12">
+                      <div class="demo-form-wrapper">
+                            <div class="col-md-11">
+                              <div class="card">
+                                <div class="card-body">
+                                  <h4 class="card-title">Chart View</h4>
+                                </div>
+                                <div class="card-body">
+                                  <div class="card-chart" id="tempdiv">
+                                    <!-- <canvas id="myChart" width="350" height="350"></canvas> -->
+                                  </div>
+                                </div>
+                                <a href="/report_management/report_list/">
+                                  <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+                                </a>
+                              </div>
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+              $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+
+
+              $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+
+});
+</script>
+<script type="text/javascript">
+         $(document).ready(function(){
+            $("#startdate").datepicker({
+                todayBtn:  1,
+                autoclose: true,
+            }).on('changeDate', function (selected) {
+                var minDate = new Date(selected.date.valueOf());
+                $('#enddate').datepicker('setStartDate', minDate);
+            });
+
+            $("#enddate").datepicker({
+                todayBtn:  1,
+                autoclose: true,
+            }).on('changeDate', function (selected) {
+                 var maxDate = new Date(selected.date.valueOf());
+                 $('#startdate').datepicker('setEndDate', maxDate);
+            });
+        });
+
+
+</script>
+<script type="text/javascript">
+
+function viewoption(clicked_id){
+  var name="selection"+clicked_id;
+  var s=document.getElementById(name);
+  var selection=s.options[s.selectedIndex].text;
+
+  var endpoint = '/ap_report_api/display/'+clicked_id+"/"+selection
+  var defaultData = []
+  var labels = [];
+  var myChart;
+  $.ajax({
+      method: "GET",
+      url: endpoint,
+      success: function(data){
+          console.log('inside mychart2')
+          labels = data.labels
+          defaultData = data.default
+          setChart()
+      },
+      error: function(error_data){
+          console.log("error")
+          console.log(error_data)
+      }
+  })
+
+  function setChart(){
+      if(this.myChart){
+        console.log('mychart is there')
+        this.myChart.remove();
+      }
+
+      var canvas = document.createElement('canvas');
+      canvas.id = "myChart";
+      canvas.name = "myChart";
+      canvas.width = 80;
+      canvas.height = 50;
+      var mydiv=document.getElementById('tempdiv');
+      mydiv.appendChild(canvas);
+
+      var ctx = document.getElementById("myChart");
+      console.log(ctx);
+      var myChart = new Chart(ctx, {
+      // type: 'polarArea',
+      // type: 'line',
+      type: 'bar',
+      data: {
+          labels: labels,
+          datasets: [{
+              label: '# of count',
+              data: defaultData,
+              backgroundColor: "#900C3F",
+              // backgroundColor: [
+              //     'rgba(255, 99, 132, 0.2)',
+              //     'rgba(54, 162, 235, 0.2)',
+              //     'rgba(255, 206, 86, 0.2)',
+              //     'rgba(75, 192, 192, 0.2)',
+              //     'rgba(153, 102, 255, 0.2)',
+              //     'rgba(255, 159, 64, 0.2)'
+              // ],
+              // borderColor: [
+              //     'rgba(255,99,132,1)',
+              //     'rgba(54, 162, 235, 1)',
+              //     'rgba(255, 206, 86, 1)',
+              //     'rgba(75, 192, 192, 1)',
+              //     'rgba(153, 102, 255, 1)',
+              //     'rgba(255, 159, 64, 1)'
+              // ],
+              borderWidth: 1,
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true,
+                  },
+                  scaleLabel:{
+                    display:true,
+                    labelString:'Total Count',
+                    fontColor:'green',
+                    fontStyle:'bold',
+                  }
+              }],
+              xAxes: [{
+                ticks:{
+                  display:false
+                },
+                scaleLabel:{
+                  display:true,
+                  labelString:'Time',
+                  fontColor:'green',
+                  fontStyle:'bold',
+                }
+              }]
+          }
+      }
+  });
+  }
+}
+
+// function downloadcsv(clicked_id){
+//   console.log(clicked_id)
+//   var name="selection"+clicked_id
+//   console.log(name)
+//   var s=document.getElementById(name);
+//   var selection=s.options[s.selectedIndex].text;
+//   var u="/report_management/download_csv/"+clicked_id+"/"+selection
+//   console.log(u)
+//   $.ajax({
+//     type:"GET",
+//     url: "/report_management/download_csv/"+clicked_id+"/"+selection,
+//     headers: { "X-CSRFToken":getCookie("csrftoken") },
+//     success: function( data )
+//     {
+//       console.log('hello')
+//     },
+//     statusCode: {
+//       404: function(response) {
+//         console.log('ajax.statusCode: 404');
+//         alert('404')
+//       },
+//       500: function(response) {
+//         alert('500')
+//       },
+//       400: function(response) {
+//         alert('400')
+//       },
+//     }
+//   })
+// }
+
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+
+$(document).ready(function(){
+
+$(".clicksr").click();
+
+$('#filter_date').change(function() {
+
+    if ($('#startdate').val() != '' && $('#enddate').val() != '' ){
+
+      $('#filter-user').prop('disabled', false);
+
+            }
+      else{
+
+        $('#filter-user').prop('disabled', true);
+      }
+
+})
+})
+
+</script>

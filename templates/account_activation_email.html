@@ -1,0 +1,17 @@
+
+{% autoescape off %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>garage</title>
+  </head>
+  <body>
+    Hi {{ user. }},
+
+    Please click on the link below to confirm your registration:
+
+    <a href="http://{{domain}}{% url 'activate' uidb64=uid token=token %}">Click Here</a>
+  </body>
+</html>
+{% endautoescape %}

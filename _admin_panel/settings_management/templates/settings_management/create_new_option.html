@@ -1,0 +1,117 @@
+<!-- <form method="POST">
+	{% csrf_token%}
+{{form}}
+ssas
+
+<input type="submit" name="submit">
+</form>
+
+ -->
+{% load staticfiles %}
+
+{% include 'base/header.html' %}
+
+<div class="profilePage"></div>
+<div class="layout-content">
+    <div class="layout-content-body">
+        <div class="title-bar">
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                <div class="col-sm-12 col-md-12">
+                    <div class="demo-form-wrapper">
+
+                        <form class="form form-horizontal" action="/settings_management/add/" method="POST" enctype='multipart/form-data'>
+                          {% csrf_token%}
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <label class=" control-label">Title</label>
+                               <input id="" class="form-control" name="opttitle"  type="text" required>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="txtDescEdit">
+                               <label class=" control-label">Content</label>
+                               <textarea id="sdesc1" name="optcontent" rows="3" cols="5" class="form-control" placeholder="Type your content here" required></textarea>
+                             </div>
+                            </div>
+
+                            <a href="/settings_management/settings_list/">
+                              <button class="btn btn-default" data-dismiss="modal" type="button">Back</button>
+                            </a>
+                            <button class="btn btn-default" data-dismiss="modal" id="btnSub" type="submit">Submit</button>
+                        </form>
+                        {% if form.errors %}
+                                  {% for field in form %}
+                                      {% for error in field.errors %}
+                                          <p style="color:red;text-align: center; margin:0px">
+                                              <span>{{ error|escape }}</span>
+                                          </p>
+                                      {% endfor %}
+                                  {% endfor %}
+
+                                  {% for error in form.non_field_errors %}
+                                     <p style="color:red;text-align: center; margin:0px">
+                                          <span>{{ error|escape }}</span>
+                                      </p>
+                                  {% endfor %}
+
+                        {% endif %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p style="color:green;text-align: center;">{{message}}</p>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% include 'base/footer.html' %}
+
+<script type="text/javascript">
+              $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+              $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+</script>

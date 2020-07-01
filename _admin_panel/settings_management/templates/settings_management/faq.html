@@ -1,0 +1,84 @@
+{% load staticfiles%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Faq</title>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="{% static 'app_settings/images/fav-icon.png' %}">
+    <link href="{% static 'app_settings/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'app_settings/css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700">
+
+  </head>
+<body>
+<div class="header-wrapper">
+<header class="sticky1 inner-header faq" id="index">
+<div class="header-cnt">
+  <div class="container">
+  <div class="col-md-12 col-lg-12">
+    <!-- <div class="header-title">
+      <span></span>
+      <h1>Happy Clients Ride</h1>
+    </div> -->
+    <div class="inner-header-content">
+      <h1>FREQUENTLY ASKED QUESTIONS</h1>
+    </div>
+
+  </div>
+</div>
+</div>
+</header>
+<section class="question">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h2>GENERAL QUESTIONS</h2>
+            {% for f in faqs %}
+              <button class="accordion">{{f.title}}</button>
+              <div class="panel">
+                <p>{{f.content}}</p>
+              </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+  </div>
+</section>
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+</script>
+<div class="col-sm-12 col-lg-12">
+      <div class="copyright-rgt">
+        <p class="text-center">© garage. All rights reserved.</p>
+      </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="{% static 'app_settings/js/jquery.bxslider.min.js' %}"></script>
+<script src="{% static 'app_settings/js/bootstrap.min.js' %}"></script>
+
+
+
+
+
+
+
+
+
+</html>

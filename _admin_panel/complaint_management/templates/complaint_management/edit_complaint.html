@@ -1,0 +1,230 @@
+<!-- <form method="POST">
+	{% csrf_token%}
+{{form}}
+ssas
+
+<input type="submit" name="submit">
+</form>
+
+ -->
+{% load staticfiles %}
+{% include 'base/header.html' %}
+
+<div class="profilePage"></div>
+<div class="layout-content">
+    <div class="layout-content-body">
+        <div class="title-bar">
+          <h1 class="title-bar-title">
+            <span class="d-ib">Complaint Status</span>
+          </h1>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                <div class="col-sm-12 col-md-12">
+                    <div class="demo-form-wrapper">
+
+                        <form class="form form-horizontal" action="/complaint_management/edit/{{comp.id}}" method="POST" enctype='multipart/form-data'>
+                          {% csrf_token%}
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <label class=" control-label" name="name" >User Name: {{comp.name}}</label>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <b>User Email: <input type="text" name="user_email" value="{{comp.user.email}}" readonly></b>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <b>Complaint Email: <input type="text" name="comp_email" value="{{comp.email}}" readonly></b>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <label class=" control-label" name="mobile" >Loggedin Mobile: {{comp.user.country_code}}{{comp.user.mobile}}</label>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <b>Complaint Detail: </b><textarea id="complaint" name="complaint" rows="10" cols="10" class="form-control" readonly>{{comp.complaint}}</textarea>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblTitleEdit">
+                               <label class=" control-label" name="compdate" >Complaint Given Date: {{comp.created_on}}</label>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6" id="lblMessageEdit">
+                               <b>Your message: </b><textarea id="reply_message" name="reply_message" rows="10" cols="10" class="form-control">{{comp.admin_message}}</textarea>
+                             </div>
+                             
+                             <div class="col-md-6" id="lblMessageEdit">
+                                <b>Your message(Arabic): </b>
+                                <label style="color:blue;" onclick="edit_catname()">Edit</label>
+                                <textarea id="reply_message_ar" name="reply_message_ar" rows="10" cols="10" onfocusout="focus_out_catname_ar()" class="form-control" readonly>{{comp.admin_message_ar}}</textarea>
+                              </div>
+                              <div class="col-md-6">
+                                <label class="btn btn-warning" onclick="updatearabic()">Check Arabic</label>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="col-md-6" id="lblTitleEdit">
+                                <b>Current Status: </b>
+                                <select name="sty" class="form-control">
+                                  <!-- <option>Open</option>
+                                  <option>Closed</option>
+                                  <option>Processing</option> -->
+
+                                  {% if comp.status == 'Open' %}
+                                    <option selected="selected">Open</option>
+                                    <option>Closed</option>
+                                    <option>Processing</option>
+                                  {% endif %}
+                                  {% if comp.status == 'Closed' %}
+                                    <option selected="selected">Closed</option>
+                                    <option>Open</option>
+                                    <option>Processing</option>
+                                  {% endif %}
+                                  {% if comp.status == 'Processing' %}
+                                    <option selected="selected">Processing</option>
+                                    <option>Open</option>
+                                    <option>Closed</option>
+                                  {% endif %}
+                                </select>
+                              </div>
+                            </div>
+
+                            <a href="/complaint_management/list/">
+                              <button class="btn btn-default" data-dismiss="modal" type="button">Back</button>
+                            </a>
+                            <button class="btn btn-default" data-dismiss="modal" id="btnSub" type="submit">Submit</button>
+                        </form>
+                        {% if form.errors %}
+                                  {% for field in form %}
+                                      {% for error in field.errors %}
+                                          <p style="color:red;text-align: center; margin:0px">
+                                              <span>{{ error|escape }}</span>
+                                          </p>
+                                      {% endfor %}
+                                  {% endfor %}
+
+                                  {% for error in form.non_field_errors %}
+                                     <p style="color:red;text-align: center; margin:0px">
+                                          <span>{{ error|escape }}</span>
+                                      </p>
+                                  {% endfor %}
+
+                        {% endif %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p style="color:green;text-align: center;">{{message}}</p>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% include 'base/footer.html' %}
+
+<script type="text/javascript">
+              $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+              $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+</script>
+<script>
+  function updatearabic(){
+    var cat = document.getElementById("reply_message").value
+    console.log(cat)
+    var arr = [cat]
+    console.log(arr)
+    $.ajax({
+      url: '/user/check_arabic/',
+      type: 'POST',
+      headers: { "X-CSRFToken":getCookie("csrftoken") },
+      data: {'arr': arr},
+      success: function(data){
+          console.log(data)
+          document.getElementById('reply_message_ar').value = data['data'][0]
+      },
+      statusCode: {
+          404: function(response) {
+              console.log('ajax.statusCode: 404');
+              alert('404')
+          },
+          500: function(response) {
+              alert('500')
+          },
+          400: function(response) {
+              alert('400')
+          },
+      }
+    });
+  }
+  function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+<script>
+  function edit_catname(){
+    $("#reply_message_ar").prop('readonly', false);
+  }
+  function focus_out_catname_ar(){
+    $("#reply_message_ar").prop('readonly', true);
+  }
+</script>

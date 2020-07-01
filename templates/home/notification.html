@@ -1,0 +1,41 @@
+{% load staticfiles %}
+{% load i18n %}
+{% include 'base/header.html' %}
+		<div class="dashboardPage"></div>
+		<div class="layout-content">
+			   <div class="layout-content-body">
+          <div class="title-bar">
+            <h1 class="title-bar-title">
+              <span class="d-ib">Notifications</span>
+            </h1>
+          </div>
+          <div class="row gutter-xs">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-actions">
+                                <!-- <button type="button" class="card-action card-toggler" title="Collapse"></button> -->
+                                <!-- <button type="button" class="card-action card-reload" title="Reload"></button> -->
+                            </div>
+                            <strong>Notification List</strong>
+                        </div>
+                        <div class="card-body"> 
+                            <div class="col-md-12 notification-lst">
+                                <ul>
+                                    {% for a in anot %}
+                                        <li class="">
+                                        <div style="width: 100%; font-weight: bold;">{{a.heading}}</div>
+                                        <div class="notif-cnt">{{a.text}}</div>
+                                        <div class="notif-time">{{a.created_on}}</div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+		</div>
+
+{% include 'base/footer.html' %}

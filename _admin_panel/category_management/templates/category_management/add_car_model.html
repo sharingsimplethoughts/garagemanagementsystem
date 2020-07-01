@@ -1,0 +1,421 @@
+<!-- <form method="POST">
+	{% csrf_token%}
+{{form}}
+ssas
+
+<input type="submit" name="submit">
+</form>
+
+ -->
+{% load staticfiles %}
+{% include 'base/header.html' %}
+
+<div class="profilePage"></div>
+<div class="layout-content">
+    <div class="layout-content-body">
+        <div class="title-bar">
+            <h1 class="title-bar-title">
+              <span class="d-ib">Car Model /</span>
+              <a href="/category_management/category_list/">Back to list</a>
+            </h1>
+        </div>
+        <div class="row gutter-xs">
+            <div class="col-md-8 card panel-body" style="box-shadow: 0px 0px 14px #999;">
+                <div class="col-sm-12 col-md-12">
+                    <div class="demo-form-wrapper">
+
+                        <form class="form form-horizontal" action="/category_management/add_car_model/" method="POST" enctype='multipart/form-data'>{% csrf_token%}
+                            <input type="hidden" id="myhiddenfield" name="myhiddenfield" value="{{hidden_value}}">
+                            <div class="form-group">
+                             <div class="col-md-6">
+                              <label class=" control-label">Model</label>
+                              <input id="catname" class="form-control" name="catname"  type="text" required>
+                             </div>
+                             <div class="form-group">
+                              <div class="col-md-6">
+                                <label class="btn btn-warning" onclick="updatearabic()">Check Arabic</label>
+                              </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="col-md-6">
+                                <label class=" control-label">Model(Arabic)</label>
+                                <input id="catname_ar" class="form-control" name="catname_ar" onfocusout="focus_out_catname_ar()" type="text" readonly>
+                              </div>
+                              <label style="color:blue;" onclick="edit_catname()">Edit</label>
+                            </div>
+                            <div class="form-group">
+                             <div class="col-md-6 add-pic">
+                              <label class=" control-label">Choose Model Icon</label>
+                              <div class="pic-box">
+                                <div class="logoImg">
+                                  <img src="/media/img/upload_icon.png" id="result1">
+                                 <input id="logo-file" name='caticon' type="file" class="hide">
+                                 <label for="logo-file" class="btn btn-large"></label>
+                                </div>
+                              </div>
+                             </div>
+                            </div>
+                            <div class="form-group">
+                                <div class=" col-sm-8  col-md-8 ">
+                                    <button class="btn btn-primary " type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <ul style="color:green;margin:0px">
+                          <li>Image file must be of type jpg or jpeg or png</li>
+                          <li>Image size can not exceed 1mb</li>
+                        </ul>
+                        {% if x == 1 %}
+                        <p style="color:red;text-align: center; margin:0px">
+                          <span>Image file is not valid</span>
+                        </p>
+                        {% endif %}
+                        {% if x == 2 %}
+                          <p style="color:blue;text-align: center; margin:0px">
+                            <span>Model added successfully.</span>
+                            {% with x=0 %}{% endwith %}
+                          </p>
+                        {% endif %}
+                        {% if x == 9 %}
+                          <p style="color:blue;text-align: center; margin:0px">
+                            <span>Model updated successfully.</span>
+                            {% with x=0 %}{% endwith %}
+                          </p>
+                        {% endif %}
+                        <!-- {% if form.errors %}
+          	               <br>
+           	               <p style="color:red;text-align: center;">{{ form.non_field_errors.as_text |cut:"* "}}<p>
+                        {% endif %} -->
+                        {% if form.errors %}
+                                  {% for field in form %}
+                                      {% for error in field.errors %}
+                                          <p style="color:red;text-align: center; margin:0px">
+                                              <span>{{ error|escape }}</span>
+                                          </p>
+                                      {% endfor %}
+                                  {% endfor %}
+
+                                  {% for error in form.non_field_errors %}
+                                     <p style="color:red;text-align: center; margin:0px">
+                                          <span>{{ error|escape }}</span>
+                                      </p>
+                                  {% endfor %}
+
+                        {% endif %}
+                        {% if messages %}
+                          {% for message in messages %}
+                            <p style="color:green;text-align: center;">{{message}}</p>
+                          {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="table-responsive col-md-12 col-sm-12 col-xs-12">
+                  <label for="">Car Model List</label>
+                  <!-- demo-datatables-5 -->
+                  <table id="demo-datatables-9" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                    <thead>
+                      <tr>
+                        <th>Model</th>
+                        <th>Model(Arabic)</th>
+                        <th>Icon</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id = 'userlist'>
+                      {% if models %}
+                        {% for model in models %}
+                          <tr>
+                            <td id="{{model.id}}">{{model.model_name}}</td>
+                            <td id="ar_{{model.id}}">{{model.model_name_ar}}</td>
+                            <td>
+                              {% if model.icon %}
+                                <img id="{{model.id}}" src="{{model.icon.url}}" id="result1" width="10%">
+                              {% endif %}
+                            </td>
+                            <td>
+                              <button class="btn btn-warning btn-sm btn-labeled" type="button" id ="{{model.id}}"  onclick="editcarmodel(this.id)">
+                                    <span class="btn-label">
+                                    <span class="icon icon-gear icon-lg icon-fw"></span>
+                                    </span>
+                                    Edit
+                              </button>
+                              <button class="btn btn-danger btn-sm btn-labeled" type="button" data-toggle="modal"  id ="{{model.id}}"  data-target="#deleteUser"  onclick="deleteuser(this.id)">
+                                    <span class="btn-label">
+                                    <span class="icon icon-trash icon-lg icon-fw"></span>
+                                    </span>
+                                    Delete
+                              </button>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr><td>No data</td></tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- <div class="table-responsive col-md-12 col-sm-12 col-xs-12"><br>
+                  <u><label for="">Arabic Car Model List</label></u>
+                  
+                    <table id="demo-datatables-8" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>Model</th>
+                          <th>Icon</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id = 'userlist'>
+                        {% if models %}
+                          {% for model in models %}
+                            <tr>
+                              <td>{{model.model_name_ar}}</td>
+                              <td>
+                                {% if model.icon %}
+                                  <img src="{{model.icon.url}}" id="result1" width="10%">
+                                {% endif %}
+                              </td>
+                              <td>
+                                <button class="btn btn-warning btn-sm btn-labeled" type="button" data-toggle="modal"  id ="{{model.id}}"  data-target="#deleteUser"  onclick="deleteuser(this.id)">
+                                      <span class="btn-label">
+                                      <span class="icon icon-gear icon-lg icon-fw"></span>
+                                      </span>
+                                      Edit
+                                </button>
+                                <button class="btn btn-danger btn-sm btn-labeled" type="button" data-toggle="modal"  id ="{{model.id}}"  data-target="#deleteUser"  onclick="deleteuser(this.id)">
+                                      <span class="btn-label">
+                                      <span class="icon icon-trash icon-lg icon-fw"></span>
+                                      </span>
+                                      Delete
+                                </button>
+                              </td>
+                            </tr>
+                          {% endfor %}
+                        {% else %}
+                          <tr><td>No data</td></tr>
+                        {% endif %}
+                      </tbody>
+                  </table>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'base/footer.html' %}
+
+<div id="deleteUser" tabindex="-1" role="dialog" class="modal fade">
+     <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+              <span class="sr-only">Close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <span class="text-danger icon icon-times-circle icon-5x"></span>
+              <h3 class="text-danger">Delete</h3>
+              <h4>Are you sure, you want to delete item?</h4>
+              <div class="m-t-lg">
+                <button class="btn btn-danger" id="deleteuser_id" data-dismiss="modal" type="button" userid = "" onclick="deleteUserFunction()" >Continue</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+</div>
+
+
+<script type="text/javascript">
+              $(document).ready(function(){
+               $("#logo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result1").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+
+              $(document).ready(function(){
+               $("#coverlogo-file").change(function(e){
+                var img = e.target.files[0];
+                if(!iEdit.open(img, true, function(res){
+                 $("#result2").attr("src", res);
+                })){
+                  alert("Whoops! That is not an image!");
+                }
+               });
+               $(document).on("click",".add-facility .plus-btn",function() {
+                $('.add-facility .facility-box').append('\
+                   <div class="col-md-6">\
+                    <input id="" class="form-control" type="date">\
+                    <span class="del">x</span>\
+                   </div>');
+                  $(".add-facility .del").on('click',function(){
+                    $(this).parent('.col-md-6').remove();
+                  });
+              });
+              });
+</script>
+<script type="text/javascript">
+  function deleteuser(clicked_id){
+    console.log(clicked_id)
+    document.getElementById('deleteuser_id').setAttribute('userid',clicked_id)
+  };
+  function deleteUserFunction(){
+      var pk  = document.getElementById('deleteuser_id').getAttribute("userid");
+      $.ajax(
+      {
+          type:"POST",
+          url: "/ap_cm_api/delete_car_model/"+pk,
+          headers: { "X-CSRFToken":getCookie("csrftoken") },
+
+        success: function( data )
+          {
+            swal("", "Deleted Successfully", "success").then(function(){
+              // location.reload();
+              location.href="http://127.0.0.1:8000/category_management/add_car_model/"
+              // location.href="http://ip:8000/category_management/add_car_model/"
+            });
+              // alert(data.message)
+              // window.location.reload();
+
+          },
+
+        statusCode: {
+          404: function(response) {
+              console.log('ajax.statusCode: 404');
+              alert('404')
+          },
+          500: function(response) {
+              alert('500')
+          },
+          400: function(response) {
+              alert('400')
+          },
+      }
+
+       })
+
+  };
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+</script>
+<script>
+  function updatearabic(){
+    var cat = document.getElementById("catname").value
+    console.log(cat)
+    var arr = [cat]
+    console.log(arr)
+    $.ajax({
+      url: '/user/check_arabic/',
+      type: 'POST',
+      headers: { "X-CSRFToken":getCookie("csrftoken") },
+      data: {'arr': arr},
+      success: function(data){
+          console.log(data)
+          document.getElementById('catname_ar').value = data['data'][0]
+      },
+      statusCode: {
+          404: function(response) {
+              console.log('ajax.statusCode: 404');
+              alert('404')
+          },
+          500: function(response) {
+              alert('500')
+          },
+          400: function(response) {
+              alert('400')
+          },
+      }
+    });
+  }
+  function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+<script>
+  function edit_catname(){
+    $("#catname_ar").prop('readonly', false);
+  }
+  function focus_out_catname_ar(){
+    $("#catname_ar").prop('readonly', true);
+  }
+</script>
+<script>
+  function editcarmodel(id){
+    var tds = document.getElementsByTagName('td');
+    var td1, td2;
+    for(var i=0;i<tds.length;i++){
+      if(tds[i].id==id){
+        td1 = tds[i]
+      }
+      if(tds[i].id=='ar_'+id){
+        td2 = tds[i]
+      }
+    }
+    var imgs = document.getElementsByTagName('img');
+    var img;
+    for(var i=0;i<imgs.length;i++){
+      if(imgs[i].id==id){
+        img = imgs[i]
+      }
+    }
+    if(td1){
+      document.getElementById('catname').setAttribute("value",td1.innerHTML)
+      console.log(td1.innerHTML)
+    }
+    if(td2){
+      document.getElementById('catname_ar').setAttribute("value",td2.innerHTML)
+      console.log(td2.innerHTML)
+    }
+    if(img){
+      document.getElementById('result1').setAttribute("src",img.src)
+      console.log(img.src)
+    }
+    document.getElementById('myhiddenfield').setAttribute("value",id)
+  }
+</script>

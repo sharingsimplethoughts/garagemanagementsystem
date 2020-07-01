@@ -1,0 +1,19 @@
+
+{% autoescape off %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>garage</title>
+  </head>
+  <body>
+    Dear user,<br><br>
+    {{not_desc}}<br><br>
+    Message from admin : <br><br>
+    {{reply_message}}<br><br>
+    Thanks<br>
+    garage Team
+
+  </body>
+</html>
+{% endautoescape %}

@@ -1,0 +1,20 @@
+
+{% autoescape off %}
+{% load static i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>garage</title>
+  </head>
+  <body>
+    Dear {{user.first_name}},<br><br>
+
+    {{not_desc}}<br><br>
+    
+
+    Thanks<br>
+    garage Team
+
+  </body>
+</html>
+{% endautoescape %}

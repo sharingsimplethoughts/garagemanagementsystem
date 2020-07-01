@@ -1,0 +1,440 @@
+{% load staticfiles %}
+{% load i18n %}
+{% include 'base/header.html' %}
+
+    <div class="user4Page ExplorerListPage">
+        <div class="layout-content">
+            <div class="layout-content-body">
+                <div class="title-bar">
+                    <h1 class="title-bar-title">
+                      <span class="d-ib">User Management</span>
+                    </h1>
+                </div>
+                <div class="row gutter-xs">
+                    <div class="col-xs-12">
+                        <div class="panel m-b-lg">
+                          <ul class="nav nav-tabs nav-justified">
+                            <li class="active"><a href="#home-11" data-toggle="tab">General Info</a></li>
+                            <!--  -->
+                            {% if userdata.user_type == '2' or userdata.has_dual_account == True %}
+                              <li><a href="#profile-11" data-toggle="tab">Garage Detail</a></li>
+                              <li><a href="#profile-12" data-toggle="tab">Category Detail</a></li>
+                              <!-- <li><a href="#profile-15" data-toggle="tab">Subcategory Detail</a></li> -->
+                              <li><a href="#profile-13" data-toggle="tab">Timeslot Detail</a></li>
+                            {% endif %}
+                          </ul>
+                          <div class="tab-content">
+                            <div class="tab-pane fade active in" id="home-11">
+                              <div class="col-sm-12 col-md-12">
+                                <div class="demo-form-wrapper">
+                                    <form class="form form-horizontal">
+                                      <div class="col-sm-2 col-md-2">
+
+                                        <div class="form-group">
+                                         <div class="col-md-12 add-pic">
+                                          <label class=" control-label">Profile Images</label>
+                                          <div class="pic-box">
+                                            <div class="logoImg">
+
+
+                                            {% if userdata.profile_image %}
+
+                                            <img src="{{userdata.profile_image.url}}" id="result1">
+
+                                            {% else %}
+
+                                             <img src="/media/img/3002121059.jpg" id="result2">
+                                             {% endif %}
+                                            </div>
+                                          </div>
+                                         </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-sm-8 col-md-8">
+
+                                        <div class="form-group">
+                                         <div class="col-md-6">
+                                          <label class=" control-label">First Name</label>
+                                          <input id="" value="{{userdata.first_name|default_if_none:''}}" class="form-control" type="text" readonly>
+                                         </div>
+
+
+                                         <div class="col-md-6">
+                                          <label class=" control-label">Last Name</label>
+                                          <input id="" value="{{userdata.last_name|default_if_none:''}}" class="form-control" type="text" readonly>
+                                         </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                         <div class="col-md-6">
+                                          <label class=" control-label">Mobile</label>
+                                          {% if userdata.social_id %}
+                                            <input id="" value="social login"  class="form-control" type="text" readonly>
+                                          {% else %}
+                                            <input id="" value="{{userdata.mobile|default_if_none:''}}"  class="form-control" type="text" readonly>
+                                          {% endif %}
+                                         </div>
+                                        </div>
+                                        <div class="form-group">
+                                         <div class="col-md-6">
+                                          <label class=" control-label">Email ID</label>
+                                          {% if userdata.social_id %}
+                                            <input id="" class="form-control" type="email" readonly value="social login">
+                                          {% else %}
+                                            <input id="" class="form-control" type="email" readonly value="{{userdata.email|default_if_none:''}}">
+                                          {% endif %}
+                                         </div>
+                                         <!-- <div class="col-md-6">
+                                          <label class=" control-label">City</label>
+                                          <input id="" class="form-control" type="text" readonly value="{{userdata.region|default_if_none:''}}">
+                                         </div> -->
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class=" col-sm-8  col-md-8 ">
+                                                <a href="/user_management/user_list/" class="btn btn-primary">Back</a>
+                                            </div>
+                                            {% if userdata.user_type == '2' or userdata.has_dual_account == True %}
+                                              {% if not userdata.is_approved %}
+                                                <button class="btn btn-success btn-sm btn-labeled" type="button" data-toggle="modal" id ="{{ userdata.user.id }}" data-target="#unblockUser" onclick="unblockuser(this.id)" >
+                                                  <span class="btn-label">
+                                                    <span class="icon icon-check icon-lg icon-fw"></span>
+                                                  </span>
+                                                  Approve
+                                                </button>
+                                              {% endif %}
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile-11">
+                              <div class="col-sm-12 col-md-12">
+                                <div class="demo-form-wrapper">
+                                  <form class="form form-horizontal">
+                                    <div class="col-sm-2 col-md-2">
+
+                                      <div class="form-group">
+                                       <div class="col-md-12 add-pic">
+                                        <label class=" control-label">Garage Images</label>
+                                        <div class="pic-box">
+                                          <div class="logoImg">
+
+
+                                          {% if garagedata.store_image1 %}
+
+                                          <img src="{{garagedata.store_image1.url}}" id="result1">
+
+                                          {% else %}
+
+                                           <img src="/media/img/upload_icon.png" id="result2">
+                                           {% endif %}
+                                        </div><br>
+                                        <div class="logoImg">
+                                           {% if garagedata.store_image2 %}
+
+                                           <img src="{{garagedata.store_image2.url}}" id="result3">
+
+                                           {% else %}
+
+                                            <img src="/media/img/upload_icon.png" id="result4">
+                                            {% endif %}
+                                          </div>
+                                            <br>
+                                          <div class="logoImg">
+                                            {% if garagedata.store_image3 %}
+
+                                            <img src="{{garagedata.store_image3.url}}" id="result5">
+
+                                            {% else %}
+
+                                             <img src="/media/img/upload_icon.png" id="result6">
+                                             {% endif %}
+                                          </div>
+                                           <!-- <input id="logo-file" type="file" class="hide"> -->
+                                           <!--label for="logo-file" class="btn btn-large"></label-->
+                                          </div>
+                                        </div>
+                                       </div>
+                                      </div>
+
+                                    <div class="col-sm-8 col-md-8">
+
+                                      <div class="form-group">
+                                       <div class="col-md-6">
+                                        <label class=" control-label">Garage Name</label>
+                                        <input id="" value="{{garagedata.name|default_if_none:''}}" class="form-control" type="text" readonly>
+                                       </div>
+                                       <div class="col-md-6">
+                                        <label class=" control-label">Owner Name</label>
+                                        <!-- {% if garagedata.is_owner %} -->
+                                          <input id="" value="{{garagedata.user.first_name|default_if_none:''}}{{garagedata.user.last_name|default_if_none:''}}" class="form-control" type="text" readonly>
+                                        <!-- {% else %} -->
+                                          <!-- <input id="" value="{{garagedata.contact_person|default_if_none:''}}" class="form-control" type="text" readonly> -->
+                                        <!-- {% endif %} -->
+                                       </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <div class="col-md-6">
+                                          <label class=" control-label">Contact Person</label>
+                                          <input id="" value="{{garagedata.contact_person|default_if_none:''}}"  class="form-control" type="text" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <label class=" control-label">Contact Number</label>
+                                          <input id="" class="form-control" type="email" readonly value="{{garagedata.country_code|default_if_none:''}}-{{garagedata.contact_num|default_if_none:''}}">
+                                         </div>
+                                       </div>
+                                    <!-- </div> -->
+                                      <div class="form-group">
+                                        <div class="col-md-6">
+                                         <label class=" control-label">Location</label>
+                                         <input id="" class="form-control" type="text" readonly value="{{garagedata.location|default_if_none:''}}">
+                                        </div>
+                                       <div class="col-md-6">
+                                        <label class=" control-label">City</label>
+                                        <input id="" class="form-control" type="text" readonly value="{{garagedata.city|default_if_none:''}}">
+                                       </div>
+                                       <div class="col-md-6">
+                                        <label class=" control-label">State</label>
+                                        <input id="" class="form-control" type="text" readonly value="{{garagedata.state|default_if_none:''}}">
+                                       </div>
+                                       <!-- <div class="col-md-6">
+                                        <label class=" control-label">Country</label>
+                                        <input id="" class="form-control" type="text" readonly value="{{garagedata.country|default_if_none:''}}">
+                                       </div> -->
+                                      </div>
+
+                                      <div class="form-group">
+                                          <div class=" col-sm-8  col-md-8 ">
+                                              <a href="/user_management/user_list/" class="btn btn-primary">Back</a>
+                                          </div>
+                                          {% if not userdata.is_approved %}
+                                          <button class="btn btn-success btn-sm btn-labeled" type="button" data-toggle="modal" id ="{{ userdata.user.id }}" data-target="#unblockUser" onclick="unblockuser(this.id)" >
+                                              <span class="btn-label">
+                                               <span class="icon icon-check icon-lg icon-fw"></span>
+                                              </span>
+                                              Approve
+                                          </button>
+                                          {% endif %}
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile-12">
+                              <div class="col-sm-12 col-md-12">
+                                <div class="demo-form-wrapper">
+                                    <form class="form form-horizontal">
+                                      <div class="col-sm-8 col-md-8">
+                                        <div class="form-group">
+                                          <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                                            <thead>
+                                              <tr>
+                                                <th>Sr.No</th>
+                                                <th>Category Type</th>
+                                                <th>Category Icon</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id = 'userlist'>
+                                              {% for cat in categorydata %}
+                                                <tr id = 'usertr'>
+                                                    <td>{{forloop.counter}}</td>
+                                                    <td>{{cat.category.type}}</td>
+                                                    {% if cat.category.icon %}
+                                                      <td><img src="{{cat.category.icon.url}}" id="result1" width="15%"></td>
+                                                    {% else %}
+                                                      <td></td>
+                                                    {% endif %}
+                                                </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class=" col-sm-8  col-md-8 ">
+                                                <a href="/user_management/user_list/" class="btn btn-primary">Back</a>
+                                            </div>
+                                            {% if not userdata.is_approved %}
+                                            <button class="btn btn-success btn-sm btn-labeled" type="button" data-toggle="modal" id ="{{ userdata.user.id }}" data-target="#unblockUser" onclick="unblockuser(this.id)" >
+                                                <span class="btn-label">
+                                                 <span class="icon icon-check icon-lg icon-fw"></span>
+                                                </span>
+                                                Approve
+                                            </button>
+                                            {% endif %}
+                                        </div>
+                                      </div>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile-13">
+                              <div class="col-sm-12 col-md-12">
+                                <div class="demo-form-wrapper">
+                                    <form class="form form-horizontal">
+                                      <div class="col-sm-8 col-md-8">
+                                        <div class="form-group">
+                                          <table id="demo-datatables-5" class="table table-striped table-bordered table-nowrap dataTable" cellspacing="0" width="100%">
+                                            <thead>
+                                              <tr>
+                                                <th>Sr.No</th>
+                                                <th>Day</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody id = 'userlist'>
+                                              {% for sch in scheduledata %}
+                                                <tr id = 'usertr'>
+                                                    <td>{{forloop.counter}}</td>
+                                                    {% if sch.day == '1' %}
+                                                      <td>Saturday</td>
+                                                    {% elif sch.day == '2' %}
+                                                      <td>Sunday</td>
+                                                    {% elif sch.day == '3' %}
+                                                      <td>Monday</td>
+                                                    {% elif sch.day == '4' %}
+                                                      <td>Tuesday</td>
+                                                    {% elif sch.day == '5' %}
+                                                      <td>Wednesday</td>
+                                                    {% elif sch.day == '6' %}
+                                                      <td>Thursday</td>
+                                                    {% else %}
+                                                      <td>Friday</td>
+                                                    {% endif %}
+                                                    <td>{{sch.start_time}} hrs</td>
+                                                    <td>{{sch.end_time}} hrs</td>
+                                                </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class=" col-sm-8  col-md-8 ">
+                                                <a href="/user_management/user_list/" class="btn btn-primary">Back</a>
+                                            </div>
+
+                                            {% if not userdata.is_approved %}
+                                              <button class="btn btn-success btn-sm btn-labeled" type="button" data-toggle="modal" id ="{{ userdata.user.id }}" data-target="#unblockUser" onclick="unblockuser(this.id)" >
+                                                  <span class="btn-label">
+                                                   <span class="icon icon-check icon-lg icon-fw"></span>
+                                                  </span>
+                                                  Approve
+                                              </button>
+                                            {% endif %}
+
+                                        </div>
+                                      </div>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% include 'base/footer.html' %}
+
+
+
+    <div id="unblockUser" tabindex="-1" role="dialog" class="modal fade">
+     <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">×</span>
+              <span class="sr-only">Close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <span class="text-success icon icon-times-circle icon-5x"></span>
+              <h3 class="text-success">Sure</h3>
+
+              <h4 id="temph4">Are you sure, you want to approve this user?</h4>
+              <div class="m-t-lg">
+                <button class="btn btn-success" id="unblockuser_id"  userid = "" onclick="unblockUserFunction()" data-dismiss="modal" type="button">Continue</button>
+                <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+      function unblockuser(clicked_id){
+        console.log(clicked_id)
+        document.getElementById('unblockuser_id').setAttribute('userid',clicked_id)
+      };
+
+      function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      function unblockUserFunction(){
+          var pk  = document.getElementById('unblockuser_id').getAttribute("userid");
+
+          $.ajax(
+          {
+              type:"POST",
+              url: "/ap_um_api/approve/"+pk,
+              headers: { "X-CSRFToken":getCookie("csrftoken") },
+
+            success: function( data )
+              {
+                swal("", "Approved Successfully", "success").then(function(){
+                  location.reload();
+                });
+
+
+                  // swal({
+                  //   // title: "Good job!",
+                  //   text: "Approved Successfully",
+                  //   icon: "success",
+                  //   // button: "Aww yiss!",
+                  //   // timer:8000,
+                  // },function(){
+                  //        window.location.reload();
+                  // });
+                  // // window.location.reload();
+              },
+            statusCode: {
+              404: function(response) {
+                  alert('404')
+              },
+              500: function(response) {
+                  alert('500')
+              },
+              400: function(response) {
+                  alert('400')
+              },
+
+          }
+
+           })
+
+        };
+    </script>

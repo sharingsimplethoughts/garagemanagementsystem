@@ -1,0 +1,152 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About Us</title>
+   <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="shortcut icon" href="{% static 'app_settings/images/fav-icon.png' %}">
+    <link href="{% static 'app_settings/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'app_settings/css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700">
+  </head>
+<body>
+<div class="header-wrapper">
+<header class="sticky1 inner-header about-us" id="index">
+<div class="header-cnt">
+  <div class="container">
+  <div class="col-md-12 col-lg-12">
+    <div class="inner-header-content">
+      <h1>{{aboutus.title}}</h1>
+    </div>
+
+  </div>
+</div>
+</div>
+</header>
+</div>
+<section class="inner-section about-inner">
+	<div class="container">
+	<div class="col-sm-12 col-lg-12">
+    <div class="cnt-section">
+    <div class="col-sm-6 col-lg-6">
+      <img src="{% static 'app_settings/img/1.jpg' %}" class="responsive-img about-img">
+    </div>
+   <div class="col-sm-6 col-lg-6 cnt-sec">
+   <h2>{{aboutus.title}}</h2>
+    <div class="cnt-sec-inner">
+
+      <p>{{aboutus.content}}</p>
+      <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="inner-section inner-section-bg green about-inner">
+  <div class="container">
+    <div class="col-sm-12 col-lg-12">
+      <div class="cnt-section">
+        <div class="col-sm-6 col-lg-6">
+            <div class="cnt-sec-lft">
+              <!-- <h2>Our Mission and Vision</h2>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p> -->
+
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-6">
+          <img src="{% static 'app_settings/img/aboutus.jpg' %}" class="responsive-img about-img">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inner-section founder value-inner">
+  <div class="container">
+    <div class="col-sm-12 col-lg-12">
+        <div class="values">
+           <h2>OUR VALUES</h2>
+        </div>
+
+       <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Safety of our users</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Integrity</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Simplicity</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Passion</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Innovation</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+
+                    <h3 class="title">Community</h3>
+                    <p class="description">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+  </div>
+</section>
+<div class="col-sm-12 col-lg-12">
+      <div class="copyright-rgt">
+        <p class="text-center">© 2019. All rights reserved.</p>
+      </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="{% static 'app_settings/js/jquery.bxslider.min.js' %}"></script>
+<script src="{% static 'app_settings/js/bootstrap.min.js' %}"></script>
+
+
+</html>
